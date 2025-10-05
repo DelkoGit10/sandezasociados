@@ -110,58 +110,62 @@ appointmentForm.addEventListener('submit', (e) => {
     const submitButton = appointmentForm.querySelector('button[type="submit"]');
     const originalText = submitButton.innerHTML;
     submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
     
-    // Prepare email parameters
-    const tipoCitaTexto = formData.tipoCita === 'presencial' ? 'Presencial en el estudio' : 'Virtual (videollamada)';
-    
-    const templateParams = {
-        to_email: 'delkosandezz@gmail.com',
-        from_name: formData.nombre,
-        from_email: formData.email,
-        telefono: formData.telefono,
-        tipo_cita: tipoCitaTexto,
-        fecha: formData.fecha,
-        hora: formData.hora,
-        mensaje: formData.mensaje
-    };
-    
-    // Send email using EmailJS
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-        .then(function(response) {
-            console.log('✅ Email enviado exitosamente!', response.status, response.text);
-            
-            // Check if it's a virtual consultation
-            if (formData.tipoCita === 'virtual') {
-                // Show payment notification
-                showNotification('¡Solicitud enviada!', 'Ahora será redirigido a Mercado Pago para completar el pago de su consulta virtual.', 'success');
+    // Check if it's a virtual consultation
+    if (formData.tipoCita === 'virtual') {
+        // For virtual consultations: Save data and redirect to payment first
+        // Email will be sent AFTER successful payment
+        localStorage.setItem('pendingAppointment', JSON.stringify(formData));
+        
+        // Show payment notification
+        showNotification('Redirigiendo a pago', 'Ahora será redirigido a Mercado Pago para completar el pago de su consulta virtual.', 'success');
+        
+        // Redirect to Mercado Pago payment link after 1.5 seconds
+        setTimeout(() => {
+            window.location.href = 'https://mpago.la/2mHVpDf';
+        }, 1500);
+    } else {
+        // For presential appointments: Send email immediately
+        const tipoCitaTexto = 'Presencial en el estudio';
+        
+        const templateParams = {
+            to_email: 'delkosandezz@gmail.com',
+            from_name: formData.nombre,
+            from_email: formData.email,
+            telefono: formData.telefono,
+            tipo_cita: tipoCitaTexto,
+            fecha: formData.fecha,
+            hora: formData.hora,
+            mensaje: formData.mensaje
+        };
+        
+        // Send email using EmailJS
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+            .then(function(response) {
+                console.log('✅ Email enviado exitosamente!', response.status, response.text);
                 
-                // Redirect to Mercado Pago payment link after 2 seconds
-                setTimeout(() => {
-                    window.location.href = 'https://mpago.la/2mHVpDf';
-                }, 2000);
-            } else {
-                // For presential appointments, show normal confirmation
+                // Show success message
                 showNotification('¡Solicitud enviada con éxito!', 'Su cita ha sido registrada. Nos pondremos en contacto con usted dentro de las 24 horas para confirmar. Gracias por confiar en Sandez & Asociados.', 'success');
                 
                 // Redirect to thank you page after 2 seconds
                 setTimeout(() => {
                     window.location.href = 'gracias.html';
                 }, 2000);
-            }
-            
-            // Reset form
-            appointmentForm.reset();
-        }, function(error) {
-            console.error('❌ Error al enviar email:', error);
-            
-            // Show error message
-            showNotification('Error al enviar', 'Hubo un problema al enviar su solicitud. Por favor, intente nuevamente o contáctenos por teléfono.', 'error');
-            
-            // Restore button
-            submitButton.disabled = false;
-            submitButton.innerHTML = originalText;
-        });
+                
+                // Reset form
+                appointmentForm.reset();
+            }, function(error) {
+                console.error('❌ Error al enviar email:', error);
+                
+                // Show error message
+                showNotification('Error al enviar', 'Hubo un problema al enviar su solicitud. Por favor, intente nuevamente o contáctenos por teléfono.', 'error');
+                
+                // Restore button
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+            });
+    }
 });
 
 // Form validation

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pago Confirmado! - Sandez & Asociados</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        .thank-you-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            padding: 40px 20px;
+        }
+        
+        .thank-you-card {
+            background: white;
+            max-width: 600px;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: scaleIn 0.5s ease 0.3s both;
+        }
+        
+        .success-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .thank-you-card h1 {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-card p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .info-box {
+            background: var(--light-gray);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .info-box h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+        
+        .contact-details {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .contact-details p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+        
+        .contact-details i {
+            color: var(--gold);
+            width: 20px;
+        }
+        
+        .back-home-btn {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: var(--transition);
+        }
+        
+        .back-home-btn:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--light-gray);
+            border-top: 4px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .thank-you-card {
+                padding: 40px 30px;
+            }
+            
+            .thank-you-card h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <section class="thank-you-section">
+        <div class="thank-you-card">
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-state">
+                <div class="spinner"></div>
+                <h2>Confirmando su reserva...</h2>
+                <p>Por favor espere un momento.</p>
+            </div>
+
+            <!-- Success State -->
+            <div id="success-state" class="hidden">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                
+                <h1>¡Pago Confirmado!</h1>
+                
+                <p>
+                    Gracias por su pago. Su consulta virtual con <strong>Sandez & Asociados</strong> 
+                    ha sido confirmada exitosamente.
+                </p>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-video"></i> Su Consulta Virtual</h3>
+                    <p>
+                        Hemos recibido su pago y reserva. Nos pondremos en contacto con usted 
+                        <strong>dentro de las próximas 24 horas</strong> para coordinar el link de 
+                        videollamada y confirmar todos los detalles de su consulta.
+                    </p>
+                </div>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-info-circle"></i> Información de Contacto</h3>
+                    <div class="contact-details">
+                        <p>
+                            <i class="fas fa-envelope"></i>
+                            <span>dranormasandez@gmail.com</span>
+                        </p>
+                        <p>
+                            <i class="fas fa-phone"></i>
+                            <span>(0379) 439-2030</span>
+                        </p>
+                        <p>
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp: +54 9 379 439-2030</span>
+                        </p>
+                    </div>
+                    <p style="font-size: 0.95rem; margin-top: 15px;">
+                        Si tiene alguna duda, no dude en contactarnos.
+                    </p>
+                </div>
+                
+                <a href="index.html" class="back-home-btn">
+                    <i class="fas fa-home"></i> Volver al Inicio
+                </a>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" class="hidden">
+                <div class="success-icon" style="background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                
+                <h1>No se encontró información</h1>
+                
+                <p>
+                    No pudimos encontrar los datos de su reserva. Si ya realizó el pago, 
+                    por favor contáctenos directamente para confirmar su cita.
+                </p>
+                
+                <div class="contact-details" style="text-align: center; margin: 30px 0;">
+                    <p style="justify-content: center;">
+                        <i class="fas fa-phone"></i>
+                        <span>(0379) 439-2030</span>
+                    </p>
+                    <p style="justify-content: center;">
+                        <i class="fas fa-envelope"></i>
+                        <span>dranormasandez@gmail.com</span>
+                    </p>
+                </div>
+                
+                <a href="index.html" class="back-home-btn">
+                    <i class="fas fa-home"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // EmailJS Configuration
+        const EMAILJS_PUBLIC_KEY = '8GVGsyP4DDiea3uPB';
+        const EMAILJS_SERVICE_ID = 'service_opkfqbq';
+        const EMAILJS_TEMPLATE_ID = 'template_n77e6jl';
+
+        // Initialize EmailJS
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+
+        // Process payment confirmation
+        window.addEventListener('load', () => {
+            // Get pending appointment data from localStorage
+            const pendingAppointmentData = localStorage.getItem('pendingAppointment');
+            
+            if (!pendingAppointmentData) {
+                // No pending appointment found
+                showErrorState();
+                return;
+            }
+
+            try {
+                const formData = JSON.parse(pendingAppointmentData);
+                
+                // Prepare email parameters
+                const templateParams = {
+                    to_email: 'delkosandezz@gmail.com',
+                    from_name: formData.nombre,
+                    from_email: formData.email,
+                    telefono: formData.telefono,
+                    tipo_cita: 'Virtual (videollamada) - PAGO CONFIRMADO',
+                    fecha: formData.fecha,
+                    hora: formData.hora,
+                    mensaje: formData.mensaje
+                };
+                
+                // Send email using EmailJS
+                emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                    .then(function(response) {
+                        console.log('✅ Email enviado exitosamente!', response.status, response.text);
+                        
+                        // Clear localStorage
+                        localStorage.removeItem('pendingAppointment');
+                        
+                        // Show success state
+                        showSuccessState();
+                    }, function(error) {
+                        console.error('❌ Error al enviar email:', error);
+                        
+                        // Even if email fails, show success (payment was made)
+                        // Clear localStorage
+                        localStorage.removeItem('pendingAppointment');
+                        
+                        // Show success state anyway
+                        showSuccessState();
+                    });
+            } catch (error) {
+                console.error('Error parsing appointment data:', error);
+                showErrorState();
+            }
+        });
+
+        function showSuccessState() {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('success-state').classList.remove('hidden');
+        }
+
+        function showErrorState() {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('error-state').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
+
