@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sandez & Asociados - Estudio Jurídico en Corrientes Capital. Servicios legales profesionales con más de años de experiencia.">
+    <title>Sandez & Asociados - Estudio Jurídico | Corrientes Capital</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <img src="images/logo-sa.png" alt="Logo Sandez & Asociados" class="logo-img">
+                    <span>Sandez & Asociados</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><a href="#citas" class="btn-nav">Reservar Cita</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Sandez & Asociados</h1>
+                <p class="hero-subtitle">Estudio Jurídico de Excelencia</p>
+                <p class="hero-description">
+                    Más de 15 años de experiencia brindando soluciones legales profesionales y personalizadas en Corrientes Capital
+                </p>
+                <div class="hero-buttons">
+                    <a href="#citas" class="btn btn-primary">Reservar Consulta</a>
+                    <a href="#servicios" class="btn btn-secondary">Nuestros Servicios</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="images/dra-norma-sandez.jpg" alt="Dra. Norma Beatriz Sandez - Fundadora de Sandez & Asociados" class="about-photo">
+                    <div class="about-badge">
+                        <i class="fas fa-award"></i>
+                        <span>Excelencia Legal</span>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <span class="section-label">Sobre Nosotros</span>
+                    <h2 class="section-title">Compromiso y Experiencia a su Servicio</h2>
+                    <p class="lead">
+                        Fundado por la <strong>Dra. Norma Beatriz Sandez</strong>, nuestro estudio se destaca por su calidad y eficiencia en servicios legales en Corrientes Capital.
+                    </p>
+                    <p>
+                        En Sandez & Asociados, entendemos que cada caso es único y requiere una atención personalizada. Nuestro equipo de profesionales altamente capacitados se dedica a brindar asesoramiento jurídico integral, combinando experiencia, conocimiento actualizado y un profundo compromiso con los intereses de nuestros clientes.
+                    </p>
+                    <p>
+                        Nos especializamos en múltiples áreas del derecho, ofreciendo soluciones efectivas y estratégicas para particulares y empresas. Nuestra filosofía se basa en la honestidad, la transparencia y la búsqueda constante de la excelencia profesional.
+                    </p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Atención Personalizada (Presencial u Online)</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Profesionales Experimentados</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Soluciones Efectivas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Nuestros Servicios</span>
+                <h2 class="section-title">Áreas de Práctica Legal</h2>
+                <p class="section-description">
+                    Ofrecemos asesoramiento integral en diversas áreas del derecho, adaptándonos a las necesidades específicas de cada cliente
+                </p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Derecho de Familia</h3>
+                    <p>
+                        Divorcios, régimen de visitas, cuota alimentaria, adopciones, violencia familiar y todo lo relacionado con asuntos familiares. Atención sensible y profesional en momentos difíciles.
+                    </p>
+                    <ul class="service-list">
+                        <li>Divorcios y separaciones</li>
+                        <li>Régimen de visitas</li>
+                        <li>Cuota alimentaria</li>
+                        <li>Adopciones</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Derecho Laboral</h3>
+                    <p>
+                        Defensa de derechos laborales, despidos, accidentes de trabajo, indemnizaciones y conflictos entre empleadores y empleados. Protegemos sus derechos laborales.
+                    </p>
+                    <ul class="service-list">
+                        <li>Despidos injustificados</li>
+                        <li>Accidentes laborales</li>
+                        <li>Indemnizaciones</li>
+                        <li>Asesoramiento empresarial</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Accidentes de Tránsito</h3>
+                    <p>
+                        Representación en casos de accidentes vehiculares, reclamos a aseguradoras, lesiones y daños materiales. Maximizamos su indemnización.
+                    </p>
+                    <ul class="service-list">
+                        <li>Reclamos a aseguradoras</li>
+                        <li>Lesiones personales</li>
+                        <li>Daños materiales</li>
+                        <li>Peritajes técnicos</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Derecho Inmobiliario</h3>
+                    <p>
+                        Compraventa de propiedades, contratos de alquiler, desalojos, sucesiones y todo lo relacionado con bienes inmuebles. Seguridad jurídica en sus transacciones.
+                    </p>
+                    <ul class="service-list">
+                        <li>Compraventa de inmuebles</li>
+                        <li>Contratos de locación</li>
+                        <li>Desalojos</li>
+                        <li>Sucesiones</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>Derecho Civil</h3>
+                    <p>
+                        Contratos, responsabilidad civil, daños y perjuicios, mediaciones y arbitrajes. Soluciones integrales para conflictos civiles de toda índole.
+                    </p>
+                    <ul class="service-list">
+                        <li>Daños y perjuicios</li>
+                        <li>Responsabilidad civil</li>
+                        <li>Contratos civiles</li>
+                        <li>Mediaciones</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Derecho Comercial</h3>
+                    <p>
+                        Constitución de sociedades, contratos comerciales, conflictos societarios y asesoramiento empresarial. Acompañamos el crecimiento de su negocio.
+                    </p>
+                    <ul class="service-list">
+                        <li>Constitución de sociedades</li>
+                        <li>Contratos comerciales</li>
+                        <li>Conflictos societarios</li>
+                        <li>Asesoramiento empresarial</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Derecho Penal</h3>
+                    <p>
+                        Defensa penal, querellas, delitos contra las personas y la propiedad. Protección integral de sus derechos en el proceso penal.
+                    </p>
+                    <ul class="service-list">
+                        <li>Defensa en causas penales</li>
+                        <li>Querellas</li>
+                        <li>Delitos culposos</li>
+                        <li>Amparos</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h3>Derecho Sucesorio</h3>
+                    <p>
+                        Sucesiones, testamentos, división de herencias, declaratorias de herederos. Asesoramiento completo en procesos sucesorios.
+                    </p>
+                    <ul class="service-list">
+                        <li>Declaratorias de herederos</li>
+                        <li>Testamentos</li>
+                        <li>División de herencias</li>
+                        <li>Particiones</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Section -->
+    <section class="appointment" id="citas">
+        <div class="container">
+            <div class="appointment-content">
+                <div class="appointment-info">
+                    <span class="section-label">Agende su Consulta</span>
+                    <h2 class="section-title">Reserve su Cita con Nosotros</h2>
+                    <p class="lead">
+                        Ofrecemos consultas presenciales en nuestro estudio y también virtuales para su comodidad. Complete el formulario y nos pondremos en contacto a la brevedad.
+                    </p>
+                    
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Ubicación</h4>
+                                <p>Ñaembe 2850<br>Corrientes Capital, Corrientes</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Teléfono</h4>
+                                <p>(0379) 439-2030<br>WhatsApp: +54 9 379 439-2030</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Horario de Atención</h4>
+                                <p>Lunes a Viernes: 7:30 - 12:00</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>dranormasandez@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="appointment-form-wrapper">
+                    <form class="appointment-form" id="appointment-form">
+                        <h3>Formulario de Reserva</h3>
+                        
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo *</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono *</label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tipo-cita">Tipo de Cita *</label>
+                            <select id="tipo-cita" name="tipo-cita" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="presencial">Presencial en el estudio</option>
+                                <option value="virtual">Virtual (videollamada)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fecha">Fecha Preferida *</label>
+                                <input type="date" id="fecha" name="fecha" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="hora">Hora Preferida *</label>
+                                <select id="hora" name="hora" required>
+                                    <option value="">Seleccione horario</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensaje">Motivo de la Consulta *</label>
+                            <textarea id="mensaje" name="mensaje" rows="4" required placeholder="Describa brevemente el motivo de su consulta..."></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" name="terminos" required>
+                                <span>Acepto los términos y condiciones y la política de privacidad *</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-calendar-check"></i>
+                            Reservar Cita
+                        </button>
+
+                        <p class="form-note">* Campos obligatorios. Nos pondremos en contacto dentro de las 24 horas para confirmar su cita.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Contáctenos</span>
+                <h2 class="section-title">Estamos a su Disposición</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3540.2866583387977!2d-58.831!3d-27.468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDI4JzA0LjgiUyA1OMKwNDknNTEuNiJX!5e0!3m2!1ses!2sar!4v1234567890" 
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Sandez & Asociados</span>
+                    </div>
+                    <p>
+                        Estudio Jurídico comprometido con la excelencia y la defensa de sus derechos. Fundado por la Dra. Norma Beatriz Sandez.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#nosotros">Sobre Nosotros</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#citas">Reservar Cita</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Servicios Principales</h4>
+                    <ul>
+                        <li><a href="#servicios">Derecho de Familia</a></li>
+                        <li><a href="#servicios">Derecho Laboral</a></li>
+                        <li><a href="#servicios">Accidentes de Tránsito</a></li>
+                        <li><a href="#servicios">Derecho Inmobiliario</a></li>
+                        <li><a href="#servicios">Derecho Penal</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contacto</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Ñaembe 2850<br>Corrientes Capital</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>(0379) 439-2030</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>dranormasandez@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sandez & Asociados. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
