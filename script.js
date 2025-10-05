@@ -131,13 +131,24 @@ appointmentForm.addEventListener('submit', (e) => {
         .then(function(response) {
             console.log('✅ Email enviado exitosamente!', response.status, response.text);
             
-            // Show success message
-            showNotification('¡Solicitud enviada con éxito!', 'Su cita ha sido registrada. Nos pondremos en contacto con usted dentro de las 24 horas para confirmar. Gracias por confiar en Sandez & Asociados.', 'success');
-            
-            // Redirect to thank you page after 2 seconds
-            setTimeout(() => {
-                window.location.href = 'gracias.html';
-            }, 2000);
+            // Check if it's a virtual consultation
+            if (formData.tipoCita === 'virtual') {
+                // Show payment notification
+                showNotification('¡Solicitud enviada!', 'Ahora será redirigido a Mercado Pago para completar el pago de su consulta virtual.', 'success');
+                
+                // Redirect to Mercado Pago payment link after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'https://mpago.la/2mHVpDf';
+                }, 2000);
+            } else {
+                // For presential appointments, show normal confirmation
+                showNotification('¡Solicitud enviada con éxito!', 'Su cita ha sido registrada. Nos pondremos en contacto con usted dentro de las 24 horas para confirmar. Gracias por confiar en Sandez & Asociados.', 'success');
+                
+                // Redirect to thank you page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'gracias.html';
+                }, 2000);
+            }
             
             // Reset form
             appointmentForm.reset();
