@@ -90,6 +90,8 @@ const appointmentForm = document.getElementById('appointment-form');
 appointmentForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
+    console.log('📝 Formulario enviado');
+    
     // Get form values
     const formData = {
         nombre: document.getElementById('nombre').value,
@@ -101,10 +103,16 @@ appointmentForm.addEventListener('submit', (e) => {
         mensaje: document.getElementById('mensaje').value
     };
     
+    console.log('🔍 Datos del formulario:', formData);
+    console.log('💳 Tipo de cita:', formData.tipoCita);
+    
     // Validate form
     if (!validateForm(formData)) {
+        console.log('❌ Validación falló');
         return;
     }
+    
+    console.log('✅ Validación pasó');
     
     // Show loading state
     const submitButton = appointmentForm.querySelector('button[type="submit"]');
@@ -114,18 +122,24 @@ appointmentForm.addEventListener('submit', (e) => {
     
     // Check if it's a virtual consultation
     if (formData.tipoCita === 'virtual') {
+        console.log('💻 Es consulta virtual - Guardando datos y redirigiendo a pago...');
+        
         // For virtual consultations: Save data and redirect to payment first
         // Email will be sent AFTER successful payment
         localStorage.setItem('pendingAppointment', JSON.stringify(formData));
+        console.log('💾 Datos guardados en localStorage');
         
         // Show payment notification
         showNotification('Redirigiendo a pago', 'Ahora será redirigido a Mercado Pago para completar el pago de su consulta virtual.', 'success');
         
         // Redirect to Mercado Pago payment link after 1.5 seconds
+        console.log('⏱️ Redirigiendo en 1.5 segundos...');
         setTimeout(() => {
+            console.log('🚀 Redirigiendo a Mercado Pago ahora...');
             window.location.href = 'https://mpago.la/2mHVpDf';
         }, 1500);
     } else {
+        console.log('🏢 Es consulta presencial - Enviando email...');
         // For presential appointments: Send email immediately
         const tipoCitaTexto = 'Presencial en el estudio';
         
