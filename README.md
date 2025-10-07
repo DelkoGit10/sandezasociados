@@ -95,7 +95,7 @@ Para modificar el contenido, edita el archivo `index.html`:
 
 ## 📍 Ubicación
 
-**Dirección**: Ñaembe 2850, Corrientes Capital, Corrientes
+**Dirección**: Ñaembe 2850, Piso 1, Oficina 4, Corrientes Capital, Corrientes
 
 El mapa está integrado con Google Maps. Para personalizarlo con coordenadas exactas:
 1. Busca la dirección en Google Maps
