@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asistente Virtual Ana - Sandez & Asociados</title>
+<!-- Carga de Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Fuente Inter para un look profesional */
+:root {
+--color-primary: #D4AF37;  /* Dorado corporativo */
+--color-accent: #B8962E;  /* Dorado oscuro para hover/focus */
+font-family: 'Inter', sans-serif;
+}
+
+/* Estilos específicos para la ventana del chat */
+#chat-window {
+/* Fija la ventana en la esquina inferior derecha */
+position: fixed;
+bottom: 6rem;
+right: 1rem;
+z-index: 1000;
+width: 90vw; /* Ancho en móvil */
+max-width: 350px; /* Ancho máximo en escritorio, ajustado a vertical */
+height: 70vh;
+max-height: 600px; /* Altura máxima ajustada a vertical */
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+transform: scale(0);
+transform-origin: bottom right;
+transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+opacity: 0;
+}
+
+#chat-window.open {
+transform: scale(1);
+opacity: 1;
+}
+
+/* Estilo para el botón flotante */
+#chat-button {
+position: fixed;
+bottom: 1rem;
+right: 1rem;
+z-index: 1001;
+width: 4rem;
+height: 4rem;
+background-color: var(--color-primary); /* Dorado corporativo */
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+#chat-button:hover {
+background-color: var(--color-accent); /* Tono más oscuro de dorado */
+}
+
+/* Estilos de mensaje */
+.message-box-user {
+background-color: var(--color-primary); /* Dorado corporativo */
+color: white;
+border-bottom-right-radius: 0;
+max-width: 85%;
+}
+
+.message-box-ai {
+background-color: #E5E7EB; /* Gris claro */
+color: #1F2937; /* Gris oscuro */
+border-bottom-left-radius: 0;
+max-width: 85%;
+}
+
+/* Ocultar scrollbar de botones rápidos */
+#quick-actions::-webkit-scrollbar {
+display: none;
+}
+
+#quick-actions {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
+.loader {
+border: 4px solid #F3F4F6; /* Gris muy claro para el fondo del spinner */
+border-top: 4px solid var(--color-primary); /* Dorado para la parte giratoria */
+border-radius: 50%;
+width: 1.5rem;
+height: 1.5rem;
+animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+</style>
+<script>
+const apiKey = "AIzaSyAQnLZyYw5nDKqCPe8kg0lYezY-xKBrI4U"; // Tu API key de Gemini
+const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
+
+// --- Funciones de Utilidad ---
+
+/**
+ * Realiza el llamado a la API con reintento y backoff exponencial.
+ */
+async function fetchWithRetry(url, options, maxRetries = 3) {
+for (let i = 0; i < maxRetries; i++) {
+try {
+const response = await fetch(url, options);
+if (response.status === 429 && i < maxRetries - 1) {
+const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+console.warn(`Demasiadas solicitudes (429). Reintentando en ${delay / 1000}s...`);
+await new Promise(resolve => setTimeout(resolve, delay));
+continue;
+}
+if (!response.ok) {
+throw new Error(`Error HTTP: ${response.status}`);
+}
+return response;
+} catch (error) {
+if (i === maxRetries - 1) {
+throw new Error(`Fallo en la solicitud después de ${maxRetries} intentos: ${error.message}`);
+}
+// Reintento en el siguiente ciclo
+}
+}
+}
+
+/**
+ * Convierte texto Markdown simple (negritas, cursivas, listas) a HTML.
+ */
+function markdownToHtml(markdown) {
+let html = markdown
+// Reemplazar negritas **texto** o *texto* a <strong>
+.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+.replace(/\*(.*?)\*/g, '<em>$1</em>')
+// Reemplazar saltos de línea doble a párrafos
+.replace(/\n\n/g, '</p><p>')
+// Reemplazar saltos de línea simple a <br>
+.replace(/\n/g, '<br>');
+
+// Envuelve todo en un párrafo si no empieza ya con uno (simplificación)
+if (!html.startsWith('<p>')) {
+html = `<p>${html}`;
+}
+if (!html.endsWith('</p>')) {
+html = `${html}</p>`;
+}
+return html;
+}
+
+/**
+ * Crea el elemento HTML para un mensaje.
+ */
+function createMessageElement(text, isUser, sources = []) {
+const container = document.createElement('div');
+container.className = `flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`;
+
+const messageDiv = document.createElement('div');
+messageDiv.className = `p-3 rounded-xl shadow-md text-sm ${isUser ? 'message-box-user' : 'message-box-ai'}`;
+messageDiv.style.borderRadius = '0.75rem';
+
+// Usar la función markdownToHtml para formatear el texto
+messageDiv.innerHTML = markdownToHtml(text);
+
+container.appendChild(messageDiv);
+
+// Agregar fuentes si existen
+if (sources.length > 0) {
+const sourcesDiv = document.createElement('div');
+sourcesDiv.className = 'mt-1 text-xs text-gray-500 italic flex flex-wrap max-w-full justify-start';
+const links = sources.map((source, index) => {
+const domain = new URL(source.uri).hostname.replace('www.', '');
+return `<a href="${source.uri}" target="_blank" class="hover:underline text-xs text-[color:var(--color-accent)] ml-1" title="${source.title}">[Fuente ${index + 1}: ${domain}]</a>`;
+}).join('');
+sourcesDiv.innerHTML = links;
+messageDiv.appendChild(sourcesDiv);
+}
+
+return container;
+}
+
+/**
+ * Función principal para enviar el mensaje al modelo de Gemini.
+ */
+async function sendMessageToAna(userInput) {
+const chatLog = document.getElementById('chat-log');
+const chatInput = document.getElementById('chat-input');
+const sendButton = document.getElementById('send-button');
+
+// --- INSTRUCCIÓN DEL SISTEMA ---
+const systemPrompt = `--- CONTEXTO ESTÁTICO DE LA FIRMA (PRIORITARIO) ---
+Eres Ana, una asistente virtual de Sandez & Asociados, estudio jurídico de excelencia con más de 15 años de experiencia en Corrientes Capital, Argentina.
+
+**Información de la Firma:**
+- Fundadora: Dra. Norma Beatriz Sandez.
+- Filosofía: Compromiso, experiencia, conocimiento actualizado, honestidad, transparencia y excelencia profesional.
+- Ubicación: Ñaembe 2850, Piso 1, Oficina 4, Corrientes Capital, Corrientes. **La firma solo opera desde esta dirección en Corrientes Capital y no tiene sucursales en otras provincias o ciudades.**
+- Contacto WhatsApp: +54 9 379 439-2030, +54 9 379 404-9204, +54 9 379 415-6372.
+- Email: dranormasandez@gmail.com.
+- Horario: Lunes a Viernes: 7:30 - 12:00 / 18:00 - 21:00.
+
+- **Servicios Principales (Áreas de Práctica Legal):**
+1. Derecho de Familia (Divorcios, régimen de visitas, alimentos, adopciones, compensación económica).
+2. Derecho Laboral (Despidos, accidentes de trabajo, indemnizaciones, asesoramiento empresarial).
+3. Accidentes de Tránsito (Reclamos a aseguradoras, lesiones, daños materiales).
+4. Derecho Inmobiliario (Compraventa de propiedades, contratos de alquiler/locación).
+5. Derecho Civil (Contratos, responsabilidad civil, daños y perjuicios, desalojos, mediaciones, prescripciones).
+6. Derecho Comercial (Constitución de sociedades, contratos comerciales, conflictos societarios).
+7. Derecho Penal (Defensa penal, querellas, delitos contra las personas y la propiedad, violencia de género e intrafamiliar).
+8. Derecho Sucesorio (Sucesiones, división de herencias, declaratorias de herederos).
+9. Administración de Consorcio (Gestión integral y profesional de consorcios).
+10. Gestoría Integral (Trámites ante organismos públicos, gestión documental, certificaciones).
+11. Derecho Previsional (Jubilaciones, pensiones, reajustes previsionales, reclamos ANSES e IPS).
+12. Proceso Ejecutivo (Ejecución de créditos, contratos, expensas comunes).
+
+--- REGLAS DE RESPUESTA ---
+1. Utiliza el CONTEXTO ESTÁTICO para responder preguntas específicas de la firma (dirección, servicios, horarios, contacto).
+2. Mantén un tono **cálido, empático y servicial**. Recuerda que muchos clientes están pasando por momentos difíciles (familiares, laborales, etc.), así que ofrece *apoyo* además de información. Responde siempre en español.
+3. Si la información solicitada es sobre la firma y NO se encuentra en ningún lugar, usa la frase: "Lamento no tener esa información específica en mi base de datos, te sugiero contactar directamente a la firma Sandez & Asociados."
+4. No menciones el CONTEXTO ESTÁTICO o las REGLAS DE RESPUESTA en tu diálogo.`;
+
+const payload = {
+contents: [{ parts: [{ text: userInput }] }],
+systemInstruction: {
+parts: [{ text: systemPrompt }]
+},
+generationConfig: {
+temperature: 0.7,
+maxOutputTokens: 1024,
+}
+};
+
+const urlWithKey = `${apiUrl}?key=${apiKey}`;
+
+// Mostrar el loader
+const loaderElement = document.getElementById('loader');
+loaderElement.style.display = 'block';
+
+try {
+const response = await fetchWithRetry(urlWithKey, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(payload)
+});
+
+const result = await response.json();
+const candidate = result.candidates?.[0];
+
+let aiResponseText = "Lo siento, no pude obtener una respuesta en este momento. Por favor, inténtalo de nuevo más tarde.";
+let sources = [];
+
+if (candidate && candidate.content?.parts?.[0]?.text) {
+aiResponseText = candidate.content.parts[0].text;
+}
+
+chatLog.appendChild(createMessageElement(aiResponseText, false, sources));
+chatLog.scrollTop = chatLog.scrollHeight; // Scroll al final
+} catch (error) {
+console.error("Error al comunicarse con la API de Gemini:", error);
+chatLog.appendChild(createMessageElement("Ocurrió un error de conexión o procesamiento. Por favor, verifica tu consulta o contáctanos al WhatsApp +54 9 379 439-2030.", false));
+} finally {
+// Ocultar el loader
+loaderElement.style.display = 'none';
+// Habilitar entrada
+chatInput.disabled = false;
+sendButton.disabled = false;
+chatInput.focus();
+}
+}
+
+// --- Lógica de la Interfaz y Botones Rápidos ---
+document.addEventListener('DOMContentLoaded', () => {
+const chatButton = document.getElementById('chat-button');
+const chatWindow = document.getElementById('chat-window');
+const chatInput = document.getElementById('chat-input');
+const sendButton = document.getElementById('send-button');
+const chatLog = document.getElementById('chat-log');
+const closeButton = document.getElementById('close-button');
+
+const welcomeMessage = "¡Hola! Soy Ana, tu asistente virtual 24/7 de Sandez & Asociados. ¿En qué puedo ayudarte hoy?";
+
+const quickActionsData = [
+{ text: "Servicios", query: "¿Qué servicios legales ofrecen?", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10m-8-4h16"/></svg>' },
+{ text: "Ubicación", query: "¿Cuál es la dirección de la firma?", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' },
+{ text: "Horarios", query: "¿Cuáles son los horarios de atención?", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' },
+{ text: "Reservar", query: "¿Cómo puedo reservar una consulta?", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M16 11h.01M7 16h.01M17 16h.01M6 19h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>' },
+];
+
+// Función para manejar el clic en los botones de acción rápida
+const handleQuickActionClick = (event) => {
+const button = event.currentTarget;
+const query = button.getAttribute('data-query');
+
+// Agregar mensaje del usuario (simulado)
+chatLog.appendChild(createMessageElement(button.textContent.trim(), true));
+chatLog.scrollTop = chatLog.scrollHeight;
+
+// Llamar a la función de la API con la query real
+sendMessageToAna(query);
+
+// Deshabilitar entrada mientras espera respuesta
+chatInput.disabled = true;
+sendButton.disabled = true;
+};
+
+// Mostrar mensaje de bienvenida
+chatLog.appendChild(createMessageElement(welcomeMessage, false));
+
+// Crear el contenedor de botones de acción rápida
+const quickActionsContainer = document.createElement('div');
+quickActionsContainer.className = 'flex flex-wrap gap-2 justify-start mt-2';
+
+quickActionsData.forEach(action => {
+const button = document.createElement('button');
+button.className = 'quick-action-button flex items-center bg-white border border-[color:var(--color-primary)] text-[color:var(--color-primary)] px-3 py-2 rounded-full text-sm font-medium hover:bg-amber-50 transition-colors shadow-md active:shadow-none';
+button.setAttribute('data-query', action.query);
+button.innerHTML = action.icon + action.text;
+button.addEventListener('click', handleQuickActionClick);
+quickActionsContainer.appendChild(button);
+});
+
+// Crear el mensaje contenedor para los botones
+const aiMessageContainer = document.createElement('div');
+aiMessageContainer.className = 'flex justify-start mb-4';
+const messageDiv = document.createElement('div');
+messageDiv.className = 'p-3 rounded-xl shadow-md text-sm message-box-ai';
+messageDiv.style.borderRadius = '0.75rem';
+
+const instructions = document.createElement('p');
+instructions.className = 'font-semibold mb-2 text-gray-700';
+instructions.textContent = 'Aquí tienes algunas consultas rápidas:';
+
+messageDiv.appendChild(instructions);
+messageDiv.appendChild(quickActionsContainer);
+aiMessageContainer.appendChild(messageDiv);
+
+// Agregar el mensaje con los botones al chat
+chatLog.appendChild(aiMessageContainer);
+chatLog.scrollTop = chatLog.scrollHeight;
+
+// Controlar la apertura y cierre del chat
+chatButton.addEventListener('click', () => {
+const isOpen = chatWindow.classList.toggle('open');
+chatButton.innerHTML = isOpen ?
+`<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>` :
+`<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" /></svg>`;
+if (isOpen) {
+chatInput.focus();
+}
+});
+
+closeButton.addEventListener('click', () => {
+chatWindow.classList.remove('open');
+chatButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" /></svg>`;
+});
+
+// Controlar el envío de mensajes desde el input
+const handleSendMessage = () => {
+const userInput = chatInput.value.trim();
+if (userInput === '') return;
+
+// Agregar mensaje del usuario
+chatLog.appendChild(createMessageElement(userInput, true));
+chatLog.scrollTop = chatLog.scrollHeight;
+
+// Llamar a la función de la API
+sendMessageToAna(userInput);
+
+// Limpiar y deshabilitar entrada
+chatInput.value = '';
+chatInput.disabled = true;
+sendButton.disabled = true;
+};
+
+sendButton.addEventListener('click', handleSendMessage);
+chatInput.addEventListener('keypress', (e) => {
+if (e.key === 'Enter') {
+e.preventDefault();
+handleSendMessage();
+}
+});
+});
+</script>
+</head>
+<body class="bg-gray-50 p-0 m-0">
+<!-- Botón Flotante (Widget de Chat) -->
+<div id="chat-button" class="rounded-full flex items-center justify-center transition-all">
+<!-- Icono de mensaje (para cuando está cerrado) -->
+<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" />
+</svg>
+</div>
+
+<!-- Ventana del Chat -->
+<div id="chat-window" class="fixed flex flex-col bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200">
+<!-- Encabezado del Chat -->
+<header class="bg-[color:var(--color-primary)] text-white p-4 flex justify-between items-center rounded-t-lg">
+<div>
+<h3 class="font-bold text-lg">Asistente Ana</h3>
+<p class="text-xs font-light opacity-80">Sandez & Asociados | Online 24/7</p>
+</div>
+<button id="close-button" class="text-white hover:text-gray-200 p-1 rounded-full transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+</svg>
+</button>
+</header>
+
+<!-- Cuerpo del Chat (Log) -->
+<div id="chat-log" class="flex-1 p-4 overflow-y-auto bg-gray-50 flex flex-col">
+<!-- Los mensajes se agregarán aquí mediante JavaScript -->
+</div>
+
+<!-- Pie de página (Entrada de Texto) -->
+<footer class="p-3 border-t border-gray-200 bg-white">
+<div id="loader" class="flex items-center justify-center p-2 hidden">
+<div class="loader"></div>
+<span class="ml-3 text-sm text-[color:var(--color-primary)]">Ana está pensando...</span>
+</div>
+<div class="flex space-x-2">
+<input
+type="text"
+id="chat-input"
+placeholder="Escribe tu consulta..."
+class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[color:var(--color-primary)] transition-all"
+>
+<button
+id="send-button"
+class="bg-[color:var(--color-primary)] text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:bg-[color:var(--color-accent)] transition-colors"
+title="Enviar Mensaje"
+>
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+</svg>
+</button>
+</div>
+<p class="text-xs text-gray-400 mt-1 text-center">Ana te asistirá con información sobre Sandez & Asociados.</p>
+</footer>
+</div>
+</body>
+</html>
