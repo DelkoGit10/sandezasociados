@@ -36,7 +36,7 @@
                     <li><a href="index.html#servicios">Servicios</a></li>
                     <li><a href="formacion.html" class="active">Formación</a></li>
                     <li><a href="index.html#citas">Contacto</a></li>
-                    <li><a href="#inscripcion" class="btn-nav">Inscribirme</a></li>
+                    <li><a href="#inscripcion" class="btn-nav">Pre-inscribirme</a></li>
                 </ul>
             </div>
         </div>
@@ -47,6 +47,7 @@
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
+                <span class="badge-proximamente">Próximamente</span>
                 <h1 class="hero-title">Del Cliente al Caso</h1>
                 <p class="hero-subtitle">Metodología práctica para abogados que comienzan</p>
                 <p class="hero-description">
@@ -54,7 +55,7 @@
                     herramientas para conducir tus primeros casos con seguridad.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#inscripcion" class="btn btn-primary">Quiero inscribirme</a>
+                    <a href="#inscripcion" class="btn btn-primary">Quiero pre-inscribirme</a>
                     <a href="#programa" class="btn btn-secondary">Ver el programa</a>
                 </div>
             </div>
@@ -220,7 +221,7 @@
                                 <select id="f-mat"><option>Sí</option><option>En trámite</option><option>No, soy estudiante</option></select></div>
                         </div>
                         <div class="form-group"><label for="f-area">Área de mayor interés</label><input type="text" id="f-area" placeholder="Ej: Laboral, Familia, Civil"></div>
-                        <button type="submit" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Enviar inscripción</button>
+                        <button type="submit" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Enviar pre-inscripción</button>
                     </form>
                 </div>
             </div>
@@ -310,7 +311,7 @@
         document.getElementById('formacion-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const v = id => document.getElementById(id).value;
-            const msg = `Hola! Quiero inscribirme en la formación Del Cliente al Caso.\nNombre: ${v('f-nombre')}\nEmail: ${v('f-email')}\nTeléfono: ${v('f-tel')}\nUniversidad/egreso: ${v('f-uni')}\nMatrícula: ${v('f-mat')}\nÁrea de interés: ${v('f-area')}`;
+            const msg = `Hola! Quiero pre-inscribirme en la formación Del Cliente al Caso.\nNombre: ${v('f-nombre')}\nEmail: ${v('f-email')}\nTeléfono: ${v('f-tel')}\nUniversidad/egreso: ${v('f-uni')}\nMatrícula: ${v('f-mat')}\nÁrea de interés: ${v('f-area')}`;
             window.open('https://wa.me/5493794392030?text=' + encodeURIComponent(msg), '_blank');
         });
     </script>
