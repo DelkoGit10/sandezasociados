@@ -1002,3 +1002,100 @@ button {
 }
 
 
+
+/* ========================================
+   Consulta de Claridad
+   ======================================== */
+.claridad {
+    background: radial-gradient(circle at top, #1f1f1f 0%, #0b0b0b 70%);
+    color: var(--white);
+    padding: 100px 0;
+    border-top: 3px solid var(--gold);
+    border-bottom: 3px solid var(--gold);
+}
+.claridad-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3.5rem;
+    align-items: center;
+}
+.claridad .section-label { color: var(--gold-light); }
+.claridad-title {
+    font-family: var(--font-primary);
+    font-size: 2.8rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin: 0.5rem 0;
+}
+.claridad-areas {
+    color: var(--gold-light);
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+}
+.claridad-hook {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+.claridad-desc { color: #d6d6d6; margin-bottom: 1.5rem; }
+.claridad-sub {
+    font-family: var(--font-primary);
+    color: var(--gold);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+.claridad-list { list-style: none; margin-bottom: 1.75rem; }
+.claridad-list li { padding: 0.35rem 0; color: #f0f0f0; }
+.claridad-list i { color: var(--gold); margin-right: 0.5rem; }
+.claridad-price {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+.claridad-old { color: #9a9a9a; text-decoration: line-through; font-size: 1.2rem; }
+.claridad-new {
+    font-family: var(--font-primary);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #111;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+    padding: 0.2rem 1.2rem;
+    border-radius: 10px;
+}
+.claridad-note { font-size: 0.9rem; color: #bdbdbd; font-style: italic; margin-bottom: 1.75rem; }
+.claridad-buttons { justify-content: flex-start; flex-wrap: wrap; }
+.claridad .btn-secondary { color: var(--gold); border-color: var(--gold); }
+.claridad .btn-secondary:hover { background: var(--gold); color: #111; }
+.claridad-image img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    display: block;
+}
+.claridad-chip {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    color: var(--gold-dark);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition);
+}
+.claridad-chip:hover { background: var(--gold); color: var(--white); }
+@media (max-width: 900px) {
+    .claridad { padding: 70px 0; }
+    .claridad-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .claridad-title { font-size: 2.1rem; }
+    .claridad-new { font-size: 2.1rem; }
+    .claridad-image { max-width: 480px; margin: 0 auto; }
+}
+.nav-links a { white-space: nowrap; }
+@media (min-width: 769px) and (max-width: 1150px) {
+    .nav-links { gap: 18px; }
+    .nav-links a { font-size: 0.92rem; }
+}
