@@ -517,3 +517,14 @@ NOTAS IMPORTANTES:
 */
 
 
+
+// Consulta de Claridad: prellenar el formulario de citas
+document.querySelectorAll('.js-claridad-form').forEach(function (link) {
+    link.addEventListener('click', function () {
+        var msg = document.getElementById('mensaje');
+        if (msg && !msg.value.includes('Consulta de Claridad')) {
+            msg.value = 'Quiero reservar una Consulta de Claridad ($50.000). Mi tema es: ';
+        }
+        setTimeout(function () { if (msg) msg.focus(); }, 700);
+    });
+});
