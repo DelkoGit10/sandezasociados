@@ -1099,3 +1099,18 @@ button {
     .nav-links { gap: 18px; }
     .nav-links a { font-size: 0.92rem; }
 }
+
+/* Badge Próximamente (Formación) */
+.badge-proximamente {
+    display: inline-block;
+    margin: 0.75rem 0;
+    padding: 0.4rem 1.1rem;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+    color: #111;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+}
