@@ -1152,3 +1152,30 @@ button {
         transition: var(--transition);
     }
 }
+
+
+/* ===== Novedades ===== */
+.novedades { padding: 90px 0; background: var(--off-white); }
+.novedades-grid { display: grid; gap: 30px; max-width: 900px; margin: 0 auto; }
+.novedad-card {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) 1fr;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px var(--shadow);
+    border-top: 3px solid var(--gold);
+}
+.novedad-img { background: #0b0b0b; }
+.novedad-img img { width: 100%; height: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+.novedad-body { padding: 35px 40px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.novedad-fecha { color: var(--gold-dark); font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.novedad-titulo { font-family: var(--font-primary); font-size: 1.8rem; color: var(--text-dark); line-height: 1.2; }
+.novedad-body p { color: var(--text-light); line-height: 1.7; }
+.novedad-firma { font-family: var(--font-primary); font-style: italic; color: var(--gold-dark); }
+@media (max-width: 768px) {
+    .novedades { padding: 60px 0; }
+    .novedad-card { grid-template-columns: 1fr; }
+    .novedad-body { padding: 25px; }
+    .novedad-titulo { font-size: 1.5rem; }
+}
