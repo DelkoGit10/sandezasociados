@@ -1179,3 +1179,52 @@ button {
     .novedad-body { padding: 25px; }
     .novedad-titulo { font-size: 1.5rem; }
 }
+
+
+/* ===== Promociones (tarjetas + fichas) ===== */
+.anchor-alias { position: absolute; top: 0; }
+.promos { position: relative; }
+.promos-header { text-align: center; margin-bottom: 3rem; }
+.promos-intro { color: #cfcfcf; margin-top: 0.5rem; }
+.promos-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; max-width: 980px; margin: 0 auto; }
+.promo-card {
+    display: flex; flex-direction: column; text-align: left; cursor: pointer;
+    background: #141414; border: 1px solid rgba(212,175,55,0.35); border-radius: 14px;
+    overflow: hidden; padding: 0; color: var(--white); font: inherit;
+    transition: var(--transition);
+}
+.promo-card:hover, .promo-card:focus-visible { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 18px 40px rgba(212,175,55,0.18); outline: none; }
+.promo-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+.promo-card-body { display: flex; flex-direction: column; gap: 6px; padding: 22px 24px 26px; }
+.promo-card-tag { color: var(--gold-light); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+.promo-card-title { font-family: var(--font-primary); font-size: 1.6rem; font-weight: 700; }
+.promo-card-line { color: #d0d0d0; }
+.promo-card-price { font-family: var(--font-primary); font-size: 1.7rem; color: var(--gold); font-weight: 700; margin-top: 4px; }
+.promo-card-price s { color: #8a8a8a; font-size: 1rem; font-weight: 400; margin-right: 6px; }
+.promo-card-more { color: var(--gold); font-weight: 700; margin-top: 6px; }
+.promo-card:hover .promo-card-more i { transform: translateX(4px); }
+.promo-card-more i { transition: var(--transition); }
+
+.promo-modal { position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.promo-modal[hidden] { display: none; }
+.promo-modal-box {
+    position: relative; width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto;
+    background: radial-gradient(circle at top, #1f1f1f 0%, #0b0b0b 80%); color: var(--white);
+    border: 1px solid var(--gold); border-radius: 14px; padding: 40px 36px 32px;
+    animation: promoIn 0.25s ease;
+}
+@keyframes promoIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+.promo-modal-box .section-label { color: var(--gold-light); }
+.promo-modal-title { font-family: var(--font-primary); font-size: 2.1rem; color: var(--gold); margin: 6px 0 14px; }
+.promo-modal-close { position: absolute; top: 10px; right: 14px; background: none; border: none; color: var(--gold); font-size: 2.2rem; line-height: 1; cursor: pointer; }
+.promo-ideal { color: #e0e0e0; margin-bottom: 1.25rem; }
+.promo-modal-box .btn-secondary { color: var(--gold); border-color: var(--gold); }
+.promo-modal-box .btn-secondary:hover { background: var(--gold); color: #111; }
+body.promo-open { overflow: hidden; }
+.novedad-clickable { cursor: pointer; transition: var(--transition); }
+.novedad-clickable:hover { transform: translateY(-4px); box-shadow: 0 16px 36px var(--shadow-dark); }
+@media (max-width: 768px) {
+    .promos-grid { grid-template-columns: 1fr; max-width: 460px; }
+    .promo-modal-box { padding: 36px 22px 24px; }
+    .promo-modal-title { font-size: 1.7rem; }
+}
