@@ -519,7 +519,7 @@ NOTAS IMPORTANTES:
 
 
 // Consulta de Claridad: prellenar el formulario de citas
-document.querySelectorAll('.js-claridad-form').forEach(function (link) {
+document.querySelectorAll('.js-claridad-form:not(.js-promo-form)').forEach(function (link) {
     link.addEventListener('click', function () {
         var msg = document.getElementById('mensaje');
         if (msg && !msg.value.includes('Consulta de Claridad')) {
@@ -528,3 +528,43 @@ document.querySelectorAll('.js-claridad-form').forEach(function (link) {
         setTimeout(function () { if (msg) msg.focus(); }, 700);
     });
 });
+
+
+// ===== Promociones: fichas emergentes =====
+(function () {
+    var lastFocus = null;
+    function openPromo(id) {
+        var m = document.getElementById(id);
+        if (!m) return;
+        lastFocus = document.activeElement;
+        m.hidden = false;
+        document.body.classList.add('promo-open');
+        var c = m.querySelector('.js-promo-close');
+        if (c) c.focus();
+    }
+    function closeAll() {
+        document.querySelectorAll('.promo-modal').forEach(function (m) { m.hidden = true; });
+        document.body.classList.remove('promo-open');
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    document.querySelectorAll('.js-promo-open').forEach(function (el) {
+        el.addEventListener('click', function (e) { e.preventDefault(); openPromo(el.getAttribute('data-promo')); });
+        el.addEventListener('keydown', function (e) {
+            if ((e.key === 'Enter' || e.key === ' ') && el.tagName !== 'BUTTON' && el.tagName !== 'A') { e.preventDefault(); openPromo(el.getAttribute('data-promo')); }
+        });
+    });
+    document.querySelectorAll('.promo-modal').forEach(function (m) {
+        m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.js-promo-close')) closeAll(); });
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+    document.querySelectorAll('.js-promo-form').forEach(function (link) {
+        link.addEventListener('click', function () {
+            var msg = document.getElementById('mensaje');
+            var text = link.getAttribute('data-msg');
+            closeAll();
+            if (msg && text) msg.value = text;
+            setTimeout(function () { if (msg) msg.focus(); }, 700);
+        });
+    });
+    if (location.hash === '#consulta-claridad') openPromo('promo-claridad');
+})();
