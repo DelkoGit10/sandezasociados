@@ -36,7 +36,7 @@
                 <ul class="nav-links" id="nav-links">
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>
-                    <li><a href="#consulta-claridad">Consulta de Claridad</a></li>
+                    <li><a href="#promociones">Promociones</a></li>
                     <li><a href="#servicios">Servicios</a></li>
                     <li><a href="formacion.html">Formación</a></li>
                     <li><a href="#novedades">Novedades</a></li>
@@ -119,39 +119,91 @@
         </div>
     </section>
 
-    <!-- Consulta de Claridad -->
-    <section class="claridad" id="consulta-claridad">
+    <!-- Promociones -->
+    <section class="claridad promos" id="promociones">
+        <span id="consulta-claridad" class="anchor-alias" aria-hidden="true"></span>
         <div class="container">
-            <div class="claridad-grid">
-                <div class="claridad-text">
-                    <span class="section-label">Servicio destacado</span>
-                    <h2 class="claridad-title">Consulta de Claridad</h2>
-                    <p class="claridad-areas">Divorcio · Alimentos · Sucesiones</p>
-                    <p class="claridad-hook">¿Estás con un divorcio, tema de alimentos o una sucesión y no sabés por dónde empezar?</p>
-                    <p class="claridad-desc">En 60 minutos (presencial en Corrientes o por videollamada) te explico todo en lenguaje claro.</p>
-                    <h3 class="claridad-sub">¿Qué te llevás?</h3>
-                    <ul class="claridad-list">
-                        <li><i class="fas fa-check-circle"></i> Pasos reales y tiempos en Corrientes</li>
-                        <li><i class="fas fa-check-circle"></i> Qué papeles necesitás</li>
-                        <li><i class="fas fa-check-circle"></i> Informe PDF con todo lo hablado</li>
-                        <li><i class="fas fa-check-circle"></i> Presupuesto cerrado sin sorpresas</li>
-                    </ul>
-                    <div class="claridad-price">
-                        <span class="claridad-old">$58.790</span>
-                        <span class="claridad-new">$50.000</span>
-                    </div>
-                    <p class="claridad-note">Valor reglamentario del Colegio: $58.790. Precio promocional de $50.000 que se descuenta íntegro si iniciás el caso con nosotros.</p>
-                    <div class="hero-buttons claridad-buttons">
-                        <a href="https://wa.me/5493794392030?text=Hola%20Dra.%20Sandez%2C%20quiero%20reservar%20una%20Consulta%20de%20Claridad." target="_blank" rel="noopener" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Reservar por WhatsApp</a>
-                        <a href="#citas" class="btn btn-secondary js-claridad-form">Reservar con el formulario</a>
-                    </div>
-                </div>
-                <div class="claridad-image">
-                    <img src="images/consulta-claridad.jpg?v=2" alt="Consulta de Claridad - Sandez &amp; Asociados - $50.000" loading="lazy">
-                </div>
+            <div class="section-header promos-header">
+                <span class="section-label">Servicios destacados</span>
+                <h2 class="claridad-title">Promociones</h2>
+                <p class="promos-intro">Tocá una promoción para ver todo lo que incluye.</p>
+            </div>
+            <div class="promos-grid">
+                <button type="button" class="promo-card js-promo-open" data-promo="promo-claridad">
+                    <img src="images/consulta-claridad.jpg?v=2" alt="Consulta de Claridad - $50.000" loading="lazy" width="800" height="800">
+                    <span class="promo-card-body">
+                        <span class="promo-card-tag">Divorcio · Alimentos · Sucesiones</span>
+                        <span class="promo-card-title">Consulta de Claridad</span>
+                        <span class="promo-card-line">60 minutos para entender tu caso, en criollo.</span>
+                        <span class="promo-card-price"><s>$58.790</s> $50.000</span>
+                        <span class="promo-card-more">Ver más <i class="fas fa-arrow-right"></i></span>
+                    </span>
+                </button>
+                <button type="button" class="promo-card js-promo-open" data-promo="promo-pack48">
+                    <img src="images/pack-revision-48hs.jpg" alt="Pack Revisión 48hs - $70.000" loading="lazy" width="800" height="800">
+                    <span class="promo-card-body">
+                        <span class="promo-card-tag">Alquiler · Trabajo · Deudas</span>
+                        <span class="promo-card-title">Pack Revisión 48hs</span>
+                        <span class="promo-card-line">Revisamos tu contrato antes de que lo firmes.</span>
+                        <span class="promo-card-price">$70.000</span>
+                        <span class="promo-card-more">Ver más <i class="fas fa-arrow-right"></i></span>
+                    </span>
+                </button>
             </div>
         </div>
     </section>
+
+    <!-- Fichas de promociones -->
+    <div class="promo-modal" id="promo-claridad" role="dialog" aria-modal="true" aria-labelledby="promo-claridad-title" hidden>
+        <div class="promo-modal-box">
+            <button type="button" class="promo-modal-close js-promo-close" aria-label="Cerrar">&times;</button>
+            <span class="section-label">Divorcio · Alimentos · Sucesiones</span>
+            <h3 class="promo-modal-title" id="promo-claridad-title">Consulta de Claridad</h3>
+            <p class="claridad-hook">¿Estás con un divorcio, tema de alimentos o una sucesión y no sabés por dónde empezar?</p>
+            <p class="claridad-desc">En 60 minutos (presencial en Corrientes o por videollamada) te explico todo en lenguaje claro.</p>
+            <h4 class="claridad-sub">¿Qué te llevás?</h4>
+            <ul class="claridad-list">
+                <li><i class="fas fa-check-circle"></i> Pasos reales y tiempos en Corrientes</li>
+                <li><i class="fas fa-check-circle"></i> Qué papeles necesitás</li>
+                <li><i class="fas fa-check-circle"></i> Informe PDF con todo lo hablado</li>
+                <li><i class="fas fa-check-circle"></i> Presupuesto cerrado sin sorpresas</li>
+            </ul>
+            <div class="claridad-price">
+                <span class="claridad-old">$58.790</span>
+                <span class="claridad-new">$50.000</span>
+            </div>
+            <p class="claridad-note">Valor reglamentario del Colegio: $58.790. Precio promocional de $50.000 que se descuenta íntegro si iniciás el caso con nosotros.</p>
+            <div class="hero-buttons claridad-buttons">
+                <a href="https://wa.me/5493794392030?text=Hola%20Dra.%20Sandez%2C%20quiero%20reservar%20una%20Consulta%20de%20Claridad." target="_blank" rel="noopener" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Reservar por WhatsApp</a>
+                <a href="#citas" class="btn btn-secondary js-claridad-form js-promo-form" data-msg="Quiero reservar una Consulta de Claridad ($50.000). Mi tema es: ">Reservar con el formulario</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="promo-modal" id="promo-pack48" role="dialog" aria-modal="true" aria-labelledby="promo-pack48-title" hidden>
+        <div class="promo-modal-box">
+            <button type="button" class="promo-modal-close js-promo-close" aria-label="Cerrar">&times;</button>
+            <span class="section-label">Alquiler · Trabajo · Deudas</span>
+            <h3 class="promo-modal-title" id="promo-pack48-title">Pack Revisión 48hs</h3>
+            <p class="claridad-hook">¿Vas a firmar un alquiler, un contrato de trabajo o te llegó una deuda?</p>
+            <p class="claridad-desc">Que no te estafen. Antes de firmar, revisalo.</p>
+            <h4 class="claridad-sub">Te entrego en 48hs</h4>
+            <ul class="claridad-list">
+                <li><i class="fas fa-check-circle"></i> Informe en PDF marcando todos los riesgos</li>
+                <li><i class="fas fa-check-circle"></i> Video de 5 min explicándote en criollo si conviene firmar o no</li>
+                <li><i class="fas fa-check-circle"></i> Qué cambiar antes de firmar</li>
+            </ul>
+            <p class="promo-ideal"><strong>Ideal para:</strong> contratos de alquiler, acuerdos laborales, resúmenes de tarjeta, intimaciones.</p>
+            <div class="claridad-price">
+                <span class="claridad-new">$70.000</span>
+            </div>
+            <p class="claridad-note">Incluye Informe PDF + Video explicativo. Mandame foto del contrato y lo empezamos.</p>
+            <div class="hero-buttons claridad-buttons">
+                <a href="https://wa.me/5493794392030?text=Hola%20Dra.%20Sandez%2C%20quiero%20el%20Pack%20Revisi%C3%B3n%2048hs.%20Te%20mando%20foto%20del%20contrato." target="_blank" rel="noopener" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Enviar contrato por WhatsApp</a>
+                <a href="#citas" class="btn btn-secondary js-promo-form" data-msg="Quiero el Pack Revisión 48hs ($70.000). Necesito revisar: ">Consultar con el formulario</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Services Section -->
     <section class="services" id="servicios">
@@ -181,7 +233,7 @@
                         <li>Adopciones</li>
                         <li>Compensación económica</li>
                     </ul>
-                    <a href="#consulta-claridad" class="claridad-chip"><i class="fas fa-lightbulb"></i> Consulta de Claridad $50.000</a>
+                    <a href="#promociones" class="claridad-chip js-promo-open" data-promo="promo-claridad"><i class="fas fa-lightbulb"></i> Consulta de Claridad $50.000</a>
                 </div>
 
                 <div class="service-card">
@@ -304,7 +356,7 @@
                         <li>Particiones</li>
                         <li>Acción de petición de herencia</li>
                     </ul>
-                    <a href="#consulta-claridad" class="claridad-chip"><i class="fas fa-lightbulb"></i> Consulta de Claridad $50.000</a>
+                    <a href="#promociones" class="claridad-chip js-promo-open" data-promo="promo-claridad"><i class="fas fa-lightbulb"></i> Consulta de Claridad $50.000</a>
                 </div>
 
                 <div class="service-card">
@@ -403,6 +455,17 @@
                 <h2 class="section-title">Del estudio</h2>
             </div>
             <div class="novedades-grid">
+                <article class="novedad-card novedad-clickable js-promo-open" data-promo="promo-pack48" tabindex="0" role="button" aria-label="Ver Pack Revisión 48hs">
+                    <div class="novedad-img">
+                        <img src="images/pack-revision-48hs.jpg" alt="Pack Revisión 48hs de Sandez &amp; Asociados" loading="lazy" width="800" height="800">
+                    </div>
+                    <div class="novedad-body">
+                        <time datetime="2026-10-19" class="novedad-fecha">19 de octubre de 2026</time>
+                        <h3 class="novedad-titulo">Nuevo: Pack Revisión 48hs</h3>
+                        <p>¿Vas a firmar un alquiler, un contrato de trabajo o te llegó una deuda? Revisamos tu documento y en 48hs te entregamos un informe PDF y un video explicándote si conviene firmar. $70.000.</p>
+                        <span class="novedad-firma">Ver la promoción <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </article>
                 <article class="novedad-card">
                     <div class="novedad-img">
                         <img src="images/novedades/dia-de-la-madre-2026.jpg" alt="Saludo de Sandez &amp; Asociados por el Día de la Madre" loading="lazy" width="900" height="900">
