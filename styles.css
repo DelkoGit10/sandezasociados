@@ -1228,3 +1228,14 @@ body.promo-open { overflow: hidden; }
     .promo-modal-box { padding: 36px 22px 24px; }
     .promo-modal-title { font-size: 1.7rem; }
 }
+
+
+/* ===== Novedades: imagen vertical (Consejos de Norma) ===== */
+.novedad-img--alta { display: flex; align-items: flex-start; }
+.novedad-img--alta img { height: auto; aspect-ratio: 1 / 2; object-fit: cover; }
+a.novedad-firma { text-decoration: none; font-weight: 600; }
+a.novedad-firma:hover { text-decoration: underline; }
+@media (max-width: 768px) {
+    .novedad-img--alta { justify-content: center; }
+    .novedad-img--alta img { max-width: 380px; }
+}
