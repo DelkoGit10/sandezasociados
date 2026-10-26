@@ -1239,3 +1239,7 @@ a.novedad-firma:hover { text-decoration: underline; }
     .novedad-img--alta { justify-content: center; }
     .novedad-img--alta img { max-width: 380px; }
 }
+
+.novedad-anexo { margin: 4px 0 6px; }
+.novedad-anexo img { width: 100%; max-width: 420px; height: auto; display: block; border-radius: 10px; box-shadow: 0 8px 22px var(--shadow); }
+@media (max-width: 768px) { .novedad-anexo img { max-width: 100%; margin: 0 auto; } }
