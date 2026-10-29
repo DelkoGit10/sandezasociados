@@ -1243,3 +1243,6 @@ a.novedad-firma:hover { text-decoration: underline; }
 .novedad-anexo { margin: 4px 0 6px; }
 .novedad-anexo img { width: 100%; max-width: 420px; height: auto; display: block; border-radius: 10px; box-shadow: 0 8px 22px var(--shadow); }
 @media (max-width: 768px) { .novedad-anexo img { max-width: 100%; margin: 0 auto; } }
+.novedad-anterior { color: var(--text-light); font-size: 0.9rem; text-decoration: none; }
+.novedad-anterior:hover { color: var(--gold-dark); text-decoration: underline; }
+.novedad-card[id] { scroll-margin-top: 100px; }
